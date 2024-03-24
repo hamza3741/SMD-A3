@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hamzakhalid.i210704.Screen21"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#C1DBDF"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/arrow_back21"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="Back Arrow"
+                    android:src="@drawable/arrow_back" />
+
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_toRightOf="@id/arrow_back21"
+                    android:text="My Profile"
+                    android:textColor="#2196F3"
+                    android:textSize="27dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_toEndOf="@+id/text2"
+                    android:contentDescription="more Icon"
+                    android:src="@drawable/more" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <!-- First row -->
+                <RelativeLayout
+                    android:id="@+id/firstRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <!-- First column -->
+                    <RelativeLayout
+                        android:id="@+id/firstColumn"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:background="#4453A5">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#AFDCE3" />
+
+                    </RelativeLayout>
+
+                    <!-- Second column -->
+                    <RelativeLayout
+                        android:id="@+id/secondColumn"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/firstColumn"
+                        android:layout_weight="1"
+                        android:background="#566C15">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#74C4DF" />
+
+                    </RelativeLayout>
+
+                    <!-- Third column -->
+                    <RelativeLayout
+                        android:id="@+id/thirdColumn"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/secondColumn"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_purple">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#AFDCE3" />
+
+                    </RelativeLayout>
+
+                    <!-- Fourth column -->
+                    <RelativeLayout
+                        android:id="@+id/fourthColumn"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/thirdColumn"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_red_light">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#74C4DF" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!-- Second row -->
+                <RelativeLayout
+                    android:id="@+id/secondRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/firstRow">
+
+                    <!-- First column -->
+                    <RelativeLayout
+                        android:id="@+id/firstColumn2"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_blue_light">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#74C4DF" />
+
+                    </RelativeLayout>
+
+                    <!-- Second column -->
+                    <RelativeLayout
+                        android:id="@+id/secondColumn2"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/firstColumn2"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_green_light">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#AFDCE3" />
+
+                    </RelativeLayout>
+
+                    <!-- Third column -->
+                    <RelativeLayout
+                        android:id="@+id/thirdColumn2"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/secondColumn2"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_purple">
+
+                        <!-- Smaller rectangle -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#74C4DF" />
+
+                    </RelativeLayout>
+
+                    <!-- Fourth column -->
+                    <RelativeLayout
+                        android:id="@+id/fourthColumn2"
+                        android:layout_width="90dp"
+                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/thirdColumn2"
+                        android:layout_weight="1"
+                        android:background="#AFDCE3">
+
+                        <ImageView
+                            android:id="@+id/EditIcon1"
+                            android:layout_marginStart="60dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/circle_edit"
+                            android:layout_gravity="center"/>
+                        <!-- Smaller rectangle -->
+                        <!-- <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#AFDCE3" /> -->
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/contactImage1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/profile"
+                    app:tint="@color/black" />
+                <ImageView
+                    android:id="@+id/EditIcon2"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/circle_edit"
+                    android:layout_gravity="center"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ContactRel1"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Ali"
+                    android:textColor="#2196F3"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text3"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="0dp"
+                    android:drawableLeft="@drawable/location"
+                    android:text="Islamabad"
+                    android:textColor="#C3BDBD"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/BookedSessionsBtn"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="#D3A61F"
+                    android:text="Booked Sessions"
+                    android:textColor="#2196F3" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/msg2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Favorite Mentors"
+                    android:textColor="#2196F3"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/my_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="38"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/msg3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="My Reviews"
+                    android:textColor="#2196F3"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="horizontal">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/review_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="38"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_marginTop="660dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveText"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="650dp"
+        tools:ignore="MissingConstraints" />
+</FrameLayout>

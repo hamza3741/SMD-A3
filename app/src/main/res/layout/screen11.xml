@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:background="#1EBBD3">
+
+            <ImageView
+                android:id="@+id/arrow_back11"
+                android:layout_width="30dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@+id/Ali1"
+                android:contentDescription="Back Arrow"
+                android:src="@drawable/arrow_back" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#1EBBD3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Name1"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="20sp"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:text="Hi, I’m John Cooper"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_toEndOf="@+id/Name1"
+                android:id="@+id/contactImage1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/profile"
+                app:tint="@color/black" />
+
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/contactImage1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#1EBBD3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textReview"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20sp"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="Drop me a review"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                />
+            <ImageView
+                android:layout_toEndOf="@+id/textReview"
+                android:id="@+id/Face1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/add_reaction"
+                app:tint="#CDDC39" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editTextExperience"
+            android:layout_width="310dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="100dp"
+            android:background="#FFFFFF"
+            android:hint="Type your experience..."
+            android:padding="10dp" />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <LinearLayout
+                android:id="@+id/linearRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/star"
+                    />
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/star" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/SubmitFeedback"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Submit Feedback"
+            android:textColor="@color/white"
+            android:backgroundTint="#2196F3"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

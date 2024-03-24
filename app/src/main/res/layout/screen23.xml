@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/lin2"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="#C1DBDF"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/arrow_back23"
+                android:layout_width="30dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="70dp"
+                android:layout_toEndOf="@+id/Ali1"
+                android:contentDescription="Back Arrow"
+                android:src="@drawable/arrow_back" />
+
+            <TextView
+                android:id="@+id/textNotifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="Booked Sessions"
+                android:textColor="#2196F3"
+                android:textSize="27dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appointmentrecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="38"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

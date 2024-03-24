@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/arrow_back6"
+            android:layout_width="30dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/Ali1"
+            android:contentDescription="Back Arrow"
+            android:src="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="Reset Password?"
+            android:textStyle="bold"
+            android:textColor="#2196F3"
+            android:textSize="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="Please type a new password and re-enter the
+password. Type something you will
+remember!"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:text="New Password"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextpswd"
+            android:layout_width="350dp"
+            android:background="#FFFFFF"
+            android:layout_height="30dp"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:text="Confirm Password"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextpswd2"
+            android:layout_width="350dp"
+            android:background="#FFFFFF"
+            android:layout_height="30dp"
+            android:hint="Re-enter Password"
+            android:inputType="textPassword"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="16dp"/>
+
+
+        <Button
+            android:id="@+id/ResetBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Reset Password"
+            android:textColor="@color/white"
+            android:backgroundTint="#2196F3"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="20dp"
+                android:text="Don’t want to reset password?"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/TextViewLogin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:text="Login"
+                android:textColor="#2196F3"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

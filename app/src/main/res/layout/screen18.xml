@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#C1DBDF"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:background="#C3BDBD"
+            android:padding="16dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="150dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <!-- Close Icon -->
+
+                <!-- HDR Icon -->
+                <ImageButton
+                    android:id="@+id/closeButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Close Icon"
+
+                    android:src="@drawable/close1"
+                    app:tint="@android:color/black" />
+
+                <ImageButton
+                    android:layout_marginStart="100dp"
+                    android:id="@+id/hdrButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="HDR Icon"
+                    android:src="@drawable/hdr"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+
+                    app:tint="@android:color/black" />
+
+                <!-- Light On Icon -->
+                <ImageButton
+                    android:layout_marginStart="100dp"
+                    android:id="@+id/lightOnButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Light On Icon"
+
+                    android:src="@drawable/light_mode"
+                    app:tint="@android:color/black" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="#C1DBDF"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="600dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Camera Modes -->
+                <TextView
+                    android:layout_marginStart="30dp"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="Portrait"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    android:background="#C1DBDF"
+                    android:backgroundTint="#C1DBDF"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="Slo-mo"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:text="Video"
+                    android:textColor="#2196F3"
+                    android:clickable="true"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:text="Photo"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="Square"
+                    android:textColor="@color/black"
+                    android:clickable="true"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/shutterButton"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="280dp"
+
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:contentDescription="Shutter Icon"
+                    android:src="@drawable/photo_camera"
+                    app:tint="@android:color/black" />
+
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="155dp"
+                    android:background="#FFFFFF"
+                    android:contentDescription="Capture Photo"
+                    android:src="@drawable/circle_background" />
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:id="@+id/iconImageView"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:contentDescription="Clickable Icon"
+
+                    android:src="@drawable/gallery" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

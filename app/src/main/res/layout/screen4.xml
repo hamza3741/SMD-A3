@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/arrow_back4"
+            android:layout_width="30dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/Ali1"
+            android:contentDescription="Back Arrow"
+            android:src="@drawable/arrow_back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:text="Verify your phone number"
+            android:textStyle="bold"
+            android:textColor="#2196F3"
+            android:textSize="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="20dp"
+                android:text="We’ve sent a code to"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="20dp"
+                android:text="+92 321 2242022"
+                android:textColor="#2196F3"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:inputType="number"
+                android:maxLength="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:inputType="number"
+                android:maxLength="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:inputType="number"
+                android:maxLength="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:inputType="number"
+                android:maxLength="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:inputType="number"
+                android:maxLength="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/VerifyBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:textColor="@color/white"
+            android:backgroundTint="#2196F3"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="30dp"
+                android:text="Send code again"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/timerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:20"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/numericKeypad"
+            android:layout_width="match_parent"
+            android:layout_height="337dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#1EBBD3"
+            android:columnCount="3"
+            android:rowCount="4">
+
+            <!-- Numeric buttons -->
+            <Button
+                style="@style/NumericButton"
+                android:text="1"
+                android:layout_marginTop="30dp"
+                />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="2"
+                android:layout_marginTop="30dp"
+                />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="3"
+                android:layout_marginTop="30dp"
+                />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="4" />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="5" />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="6" />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="7" />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="8" />
+
+            <Button
+                style="@style/NumericButton"
+                android:text="9" />
+
+            <!-- Empty space as a placeholder for the "0" button -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1" />
+
+            <Button
+                style="@style/NumericButton"
+                android:layout_marginBottom="50dp"
+                android:text="0" />
+
+            <!-- Backspace button -->
+            <Button
+                style="@style/NumericButton"
+
+                android:layout_marginBottom="50dp"
+                android:text="⌫" />
+        </GridLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

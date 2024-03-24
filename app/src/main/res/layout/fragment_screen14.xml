@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.hamzakhalid.i210704.Screen14"
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/lin1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#C1DBDF"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:id="@+id/lin2"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="#C1DBDF"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/arrow_back14"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="85dp"
+                    android:contentDescription="Back Arrow"
+                    android:src="@drawable/arrow_back" />
+
+                <TextView
+                    android:id="@+id/textNotifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="Chats"
+                    android:textColor="#2196F3"
+                    android:textSize="27dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin3"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#C1DBDF"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/textCommunity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="My Community"
+                    android:textColor="#707171"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_marginStart="20dp"
+                        android:id="@+id/image_profile1"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/profile"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/circle1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_weight="1"
+                        app:tint="#CFBC11"
+                        android:src="@drawable/circle_background"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/image_profile2"
+                        android:layout_toRightOf="@id/image_profile1"
+                        android:layout_width="50dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        app:tint="@color/white"
+                        android:layout_weight="1"
+                        android:src="@drawable/profile"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/circle2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="120dp"
+                        android:layout_weight="1"
+                        app:tint="#CFBC11"
+                        android:src="@drawable/circle_background"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/image_profile3"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/image_profile2"
+                        android:layout_weight="1"
+                        app:tint="#E44715"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile" />
+
+                    <ImageView
+                        android:id="@+id/circle3"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="190dp"
+                        android:layout_weight="1"
+                        app:tint="#CFBC11"
+                        android:src="@drawable/circle_background"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/image_profile4"
+                        android:layout_toRightOf="@id/image_profile3"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        app:tint="#999999"
+                        android:src="@drawable/profile"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/circle4"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="270dp"
+                        android:layout_weight="1"
+                        app:tint="#CFBC11"
+                        android:src="@drawable/circle_background"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/image_profile5"
+                        android:layout_toRightOf="@id/image_profile4"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        app:tint="#886699"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/profile"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/circle5"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="340dp"
+                        android:layout_weight="1"
+                        app:tint="#CFBC11"
+                        android:src="@drawable/circle_background"
+                        android:scaleType="centerCrop" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lin4"
+                android:layout_width="match_parent"
+                android:layout_height="520dp"
+                android:background="#C1DBDF"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+                <TextView
+                    android:id="@+id/textAllMessages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="All Messages"
+                    android:textColor="#707171"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chats_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="38"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_marginTop="660dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveText"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="650dp" />
+    </FrameLayout>
+
+

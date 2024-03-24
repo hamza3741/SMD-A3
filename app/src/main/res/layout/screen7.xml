@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Screen7Activity"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+        android:background="#C1DBDF"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <TextView
+                android:id="@+id/Hello1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:text="Hello,"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/Name"
+                android:layout_toRightOf="@+id/Hello1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:text="Ali"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/NotificationsIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="320dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="Notification Icon"
+                android:src="@drawable/notifications" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/msg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:text="Ready for mentorship? Let’s begin the journey!"
+                android:textColor="#2196F3"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#2196F3"
+                android:text="All"
+                android:textSize="10dp"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="0dp"
+                android:layout_toRightOf="@id/btn1"
+                android:backgroundTint="#7FBCEC"
+                android:text="Education"
+                android:textColor="#245550"
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn3"
+                android:layout_toRightOf="@id/btn2"
+                android:layout_width="122dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:backgroundTint="#7FBCEC"
+                android:text="Entrepreneurship"
+                android:textStyle="bold"
+                android:textSize="9dp"
+                android:textColor="#245550" />
+
+            <Button
+                android:id="@+id/btn4"
+                android:layout_toRightOf="@id/btn3"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:backgroundTint="#7FBCEC"
+                android:text="Personal Growth"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:textColor="#245550" />
+            <Button
+                android:id="@+id/btn5"
+                android:layout_toRightOf="@id/btn4"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:backgroundTint="#7FBCEC"
+                android:text="Career"
+                android:textStyle="bold"
+                android:textSize="10dp"
+                android:textColor="#245550" />
+        </RelativeLayout>
+        </HorizontalScrollView>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/msg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:text="Top Mentors for you"
+                android:textColor="#2196F3"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_toRightOf="@id/msg2"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:text="View All"
+                android:textColor="#2196F3"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+       <HorizontalScrollView
+           android:layout_width="match_parent"
+           android:layout_height="150dp">
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_recycler_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="38"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+       </HorizontalScrollView>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/msg3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:text="Education Mentors"
+                android:textColor="#2196F3"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_toRightOf="@id/msg3"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:text="View All"
+                android:textColor="#2196F3"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+       <HorizontalScrollView
+           android:layout_width="match_parent"
+           android:layout_height="150dp">
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="38"
+                >
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+       </HorizontalScrollView>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/msg4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:text="Recent Mentors"
+                android:textColor="#2196F3"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_toRightOf="@id/msg4"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:text="View All"
+                android:textColor="#2196F3"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_marginTop="650dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveText"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu"
+        />
+</FrameLayout>

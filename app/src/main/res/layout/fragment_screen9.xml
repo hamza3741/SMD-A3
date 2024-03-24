@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hamzakhalid.i210704.Screen9"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/arrow_back9"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/Ali1"
+            android:contentDescription="Back Arrow"
+            android:src="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="0dp"
+            android:text="Search Results"
+            android:textColor="#2196F3"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="260dp"
+            android:layout_marginTop="10dp"
+            android:background="#2196F3"
+            android:drawableEnd="@drawable/expand"
+            android:text="Filter"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="38"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_marginTop="670dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveText"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="650dp"
+        tools:ignore="MissingConstraints" />
+</FrameLayout>

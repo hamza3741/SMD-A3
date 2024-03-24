@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C1DBDF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:background="#1EBBD3">
+
+            <ImageView
+                android:id="@+id/arrow_back13"
+                android:layout_width="30dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/Ali1"
+                android:contentDescription="Back Arrow"
+                android:src="@drawable/arrow_back" />
+
+            <TextView
+                android:id="@+id/textSession"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="0sp"
+                android:layout_width="280dp"
+                android:layout_height="50dp"
+                android:text="Book your Session"
+                android:textColor="#2196F3"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:orientation="vertical"
+            android:background="#1EBBD3">
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:background="#1EBBD3">
+                <TextView
+                    android:id="@+id/Name2"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20sp"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:text="John Cooper"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_toEndOf="@+id/Name2"
+                    android:id="@+id/contactImage1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="0dp"
+                    android:src="@drawable/profile"
+                    app:tint="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:background="#1EBBD3">
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/star"
+                    />
+                <TextView
+                    android:id="@+id/text4.9"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="0sp"
+                    android:layout_width="150dp"
+                    android:layout_height="30dp"
+                    android:text="4.8"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/contactImage1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="#1EBBD3">
+
+                <TextView
+                    android:id="@+id/textfee"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20sp"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:text="$1500/Session"
+                    android:textColor="#CFE309"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/chat1"
+                    android:background="#CFE309"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/chat"
+                    app:tint="@color/black" />
+
+                <ImageView
+                    android:id="@+id/call1"
+                    android:background="#CFE309"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/call"
+                    app:tint="@color/black" />
+
+                <ImageView
+                    android:id="@+id/vidcall1"
+                    android:background="#CFE309"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/video_camera"
+                    app:tint="@color/black" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <CalendarView
+            android:id="@+id/calendarView2"
+            android:background="#4EC5B9"
+            android:headerBackground="#67d7db"
+            android:selectedWeekBackgroundColor="#67d7db"
+            android:unfocusedMonthDateColor="#bababa"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+        <TextView
+            android:id="@+id/textslots"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10sp"
+            android:layout_width="230dp"
+            android:layout_height="30dp"
+            android:text="Available Time Slots"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="#C1DBDF">
+
+            <Button
+                android:id="@+id/SlotBtn9"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="9:00 AM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="5dp" />
+
+            <Button
+                android:id="@+id/SlotBtn10"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="10:00 AM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+
+            <Button
+                android:id="@+id/SlotBtn11"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="11:00 AM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn12"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="12:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn13"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="1:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn14"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="2:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn15"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="3:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn16"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="4:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+            <Button
+                android:id="@+id/SlotBtn17"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="5:00 PM"
+                android:textColor="@color/white"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="5dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/AppointmentBtn1"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:text="Book an Appointment"
+            android:textColor="@color/white"
+            android:backgroundTint="#327C75"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="16dp"/>
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

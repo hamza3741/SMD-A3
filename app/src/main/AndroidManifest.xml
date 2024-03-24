@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/mood"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/circle_background"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Integration"
+        tools:targetApi="31">
+        <activity
+            android:name="com.hamzakhalid.i210704.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen2Activity">
+            <!-- Optional: add intent filters or other attributes if needed -->
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen5Activity">
+            <!-- Forgot PSWD Optional: add intent filters or other attributes if needed -->
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen3Activity">
+            <!-- SignUp Optional: add intent filters or other attributes if needed -->
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen7Activity">
+            <!-- Post Login Optional: add intent filters or other attributes if needed -->
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen4Activity">
+            <!-- Verify Phone Num Optional: add intent filters or other attributes if needed -->
+        </activity>
+
+        <activity android:name="com.hamzakhalid.i210704.Screen6Activity">
+            <!-- Reset Pswd Optional: add intent filters or other attributes if needed -->
+        </activity>
+        <activity android:name="com.hamzakhalid.i210704.Screen8Activity">
+            <!-- Search Page Optional: add intent filters or other attributes if needed -->
+        </activity>
+        <activity android:name="com.hamzakhalid.i210704.Screen10Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen11Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen13Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen17Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen18Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen22Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen23Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen24Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen20Activity" />
+        <activity android:name="com.hamzakhalid.i210704.Screen19Activity" />
+    </application>
+
+</manifest>

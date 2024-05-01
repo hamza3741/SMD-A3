@@ -2,12 +2,14 @@ package com.hamzakhalid.i210704
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.hamzakhalid.integration.R
+import com.squareup.picasso.Picasso
 
 class Screen10Activity : AppCompatActivity() {
     private lateinit var nameTextView: TextView
@@ -22,11 +24,21 @@ class Screen10Activity : AppCompatActivity() {
 
         // Extract the mentor name and description from the Intent
         val mentorName = intent.getStringExtra("mentorName")
+        val imageurl = intent.getStringExtra("imageUrl")
+        Log.d("Mentor Image URL", imageurl ?: "No image URL")
+
         val mentorDescription = intent.getStringExtra("mentorDescription")
         val mentorRate=intent.getStringExtra("mentorRate")
 
         // Update the name and description views
         updateMentorInfo(mentorName, mentorDescription)
+        val contactImage1 = findViewById<ImageView>(R.id.contactImage1)
+
+        // Append the folder path to the image URL
+        val imageUrlWithFolder = "http://192.168.1.11/A3_MentorImages/$imageurl"
+
+// Load the image using Picasso
+        Picasso.get().load("http://192.168.1.11/A3_MentorImages/$imageurl").into(contactImage1)
 
         var btn1 = findViewById<Button>(R.id.ReviewBtn)
         btn1.setOnClickListener{

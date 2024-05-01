@@ -2,13 +2,18 @@ package com.hamzakhalid.i210704
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -23,20 +28,31 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.hamzakhalid.integration.R
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
     private var mentorName: String? = null
+    private var userID:Int? = null
     private lateinit var editTextMessage: EditText // Reference to the EditText where the user enters the message
     private lateinit var recyclerView: RecyclerView
     private lateinit var messageAdapter: MessageAdapter
@@ -140,6 +156,9 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
         // Extract mentor name from arguments
         mentorName = arguments?.getString("mentorName")
 
+        // Extract userID from arguments
+        userID = arguments?.getInt("userID")
+
         // Set mentor name to the TextView
         val nameTextView = view.findViewById<TextView>(R.id.Name)
         nameTextView.text = mentorName
@@ -151,9 +170,9 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
         messageAdapter = MessageAdapter(messageList, this)
         recyclerView.adapter = messageAdapter
 
-        audioFilePath = "${requireContext().getExternalFilesDir(null)?.absolutePath}/audio_recording.3gp"
+       // audioFilePath = "${requireContext().getExternalFilesDir(null)?.absolutePath}/audio_recording.3gp"
         //audioFilePath = "${requireContext().externalCacheDir?.absolutePath}/audiorecordtest.3gp"
-      // audioFilePath = "/Music/audio_recording.mp3"
+      audioFilePath = "/Music/audio_recording.mp3"
         mediaRecorder = MediaRecorder()
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -285,46 +304,24 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                 micButton.performClick()
             }
         }
+
+
         // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("messages")
-        // Listen for changes in the database and update the RecyclerView
-        // Listen for changes in the database and update the RecyclerView
-        // Listen for changes in the database and update the RecyclerView
-        databaseReference.addValueEventListener(object : ValueEventListener {
-          /*  override fun onDataChange(dataSnapshot: DataSnapshot) {
-                messageList.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val messageId = snapshot.child("messageId").getValue(String::class.java)
-                    val messageText = snapshot.child("messageText").getValue(String::class.java)
-                    val messageType = snapshot.child("messageType").getValue(String::class.java)
-                    val timestampString = snapshot.child("timestamp").getValue(String::class.java)
-                    val mediaUrl = snapshot.child("audioFilePath").getValue(String::class.java) // Retrieve audioFilePath as mediaUrl
 
-                    // Parse the timestamp string into milliseconds since epoch
-                    val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(timestampString)?.time ?: 0L
-
-                    val message = Message(
-                        messageId ?: "",
-                        messageType?.let { MessageType.valueOf(it) },
-                        messageText,
-                        mediaUrl,
-                        null,
-                        null,
-                        timestamp
-                    )
-
-                    message?.let { messageList.add(it) }
-                }
-                messageAdapter.notifyDataSetChanged()
-            }*/
-          override fun onDataChange(dataSnapshot: DataSnapshot) {
+        /*
+      // Listen for changes in the database and update the RecyclerView
+      // Listen for changes in the database and update the RecyclerView
+      // Listen for changes in the database and update the RecyclerView
+      databaseReference.addValueEventListener(object : ValueEventListener {
+        /*  override fun onDataChange(dataSnapshot: DataSnapshot) {
               messageList.clear()
               for (snapshot in dataSnapshot.children) {
                   val messageId = snapshot.child("messageId").getValue(String::class.java)
                   val messageText = snapshot.child("messageText").getValue(String::class.java)
                   val messageType = snapshot.child("messageType").getValue(String::class.java)
                   val timestampString = snapshot.child("timestamp").getValue(String::class.java)
-                  val mediaUrl = snapshot.child("mediaUrl").getValue(String::class.java) // Retrieve mediaUrl
+                  val mediaUrl = snapshot.child("audioFilePath").getValue(String::class.java) // Retrieve audioFilePath as mediaUrl
 
                   // Parse the timestamp string into milliseconds since epoch
                   val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(timestampString)?.time ?: 0L
@@ -333,7 +330,7 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                       messageId ?: "",
                       messageType?.let { MessageType.valueOf(it) },
                       messageText,
-                      mediaUrl, // Pass mediaUrl to the Message constructor
+                      mediaUrl,
                       null,
                       null,
                       timestamp
@@ -342,14 +339,86 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                   message?.let { messageList.add(it) }
               }
               messageAdapter.notifyDataSetChanged()
-          }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle error
-            }
-        })
+          }*/
 
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            messageList.clear()
+            for (snapshot in dataSnapshot.children) {
+                val messageId = snapshot.child("messageId").getValue(String::class.java)
+                val messageText = snapshot.child("messageText").getValue(String::class.java)
+                val messageType = snapshot.child("messageType").getValue(String::class.java)
+                val timestampString = snapshot.child("timestamp").getValue(String::class.java)
+                val mediaUrl = snapshot.child("mediaUrl").getValue(String::class.java) // Retrieve mediaUrl
+
+                // Parse the timestamp string into milliseconds since epoch
+                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(timestampString)?.time ?: 0L
+
+                val message = Message(
+                    messageId ?: "",
+                    messageType?.let { MessageType.valueOf(it) },
+                    messageText,
+                    mediaUrl, // Pass mediaUrl to the Message constructor
+                    null,
+                    null,
+                    timestamp
+                )
+
+                message?.let { messageList.add(it) }
+            }
+            messageAdapter.notifyDataSetChanged()
+        }
+          override fun onCancelled(databaseError: DatabaseError) {
+              // Handle error
+          }
+      }
+      )
+*/
+        fetchMessagesFromServer()
         return view
 
+    }
+    private fun fetchMessagesFromServer() {
+        val url = "http://192.168.1.11/A3_fetchMessages.php"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val messageId = jsonObject.getString("messageId")
+                        val messageType = MessageType.valueOf(jsonObject.getString("messageType"))
+                        val messageText = jsonObject.getString("messageText")
+                        val mediaUrl = jsonObject.getString("mediaUrl")
+                        val timestampString = jsonObject.getString("timestamp")
+
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        dateFormat.timeZone = TimeZone.getTimeZone("GMT+5")
+                        val timestamp = dateFormat.parse(timestampString).time
+
+                        val message = Message(
+                            messageId,
+                            messageType,
+                            messageText,
+                            mediaUrl,
+                            null,
+                            null,
+                            timestamp
+                        )
+                        messageList.add(message)
+                    }
+                    messageAdapter.notifyDataSetChanged()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show()
+            })
+
+        val requestQueue: RequestQueue = Volley.newRequestQueue(requireContext())
+        requestQueue.add(stringRequest)
     }
     private fun openFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -375,7 +444,8 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
         }
     }
 
-    private fun saveFileMessageToDatabase(fileUri: String) {
+    private fun saveFileMessageToDatabase(fileUri: Uri?) {
+        /*
         val userID = FirebaseAuth.getInstance().currentUser?.uid
         val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
@@ -399,7 +469,85 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                         Toast.makeText(requireContext(), "Failed to save file", Toast.LENGTH_SHORT).show()
                     }
                 }
+        }*/
+        // Timestamp for the message
+        // Timestamp for the message
+        val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+
+        // Save file to local directory
+        val fileName = "A3_files_${System.currentTimeMillis()}"
+        val file = File(requireContext().filesDir, fileName)
+        try {
+            val inputStream = requireContext().contentResolver.openInputStream(fileUri!!)
+            inputStream?.let {
+                val outputStream = FileOutputStream(file)
+                inputStream.copyTo(outputStream)
+                inputStream.close()
+                outputStream.close()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return
         }
+
+        // Save file to server
+        val url = "http://192.168.1.11/A3_insertFiles.php"
+
+        val stringRequest = object : StringRequest(Method.POST, url,
+            Response.Listener { response ->
+                // Handle the response from PHP
+                Log.d("UploadFile", "Response: $response")
+                // Message saved successfully
+            },
+            Response.ErrorListener { error ->
+                // Error handling
+                Log.e("UploadFile", "Error: $error")
+                // Error while saving the file
+                Toast.makeText(requireContext(), "Failed to save file", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["userID"] = userID.toString()
+                params["mentorName"] = mentorName ?: ""
+                params["file_path"] = file.absolutePath
+                params["timestamp"] = timeStamp
+                params["message_type"] = MessageType.FILE.name
+                params["message"] = "" // If you have a message, add it here
+                return params
+            }
+        }
+
+        Volley.newRequestQueue(requireContext()).add(stringRequest)
+    }
+    override fun onDeleteMessage(messageId: String) {
+        val url = "http://192.168.1.11/A3_deleteMessage.php"
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                // Remove the message from the list and notify the adapter
+                val iterator = messageList.iterator()
+                while (iterator.hasNext()) {
+                    val message = iterator.next()
+                    if (message.messageId == messageId) {
+                        iterator.remove()
+                        messageAdapter.notifyDataSetChanged()
+                        break
+                    }
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["messageId"] = messageId
+                return params
+            }
+        }
+        val requestQueue: RequestQueue = Volley.newRequestQueue(requireContext())
+        requestQueue.add(stringRequest)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -410,7 +558,7 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                 if (resultCode == Activity.RESULT_OK) {
                     val selectedMediaUri = data?.data // Change the variable name
                     if (selectedMediaUri != null) {
-                        saveFileMessageToDatabase(selectedMediaUri.toString()) // Update the function call
+                        saveFileMessageToDatabase(selectedMediaUri) // Update the function call
                     }
                 }
             }
@@ -418,8 +566,10 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                 // Handle media pick result
                 if (resultCode == Activity.RESULT_OK) {
                     val selectedMediaUri = data?.data
-                    if (selectedMediaUri != null) {
+                    selectedMediaUri?.let {
                         saveMediaMessageToDatabase(selectedMediaUri.toString())
+                        imageStore(selectedMediaUri) // Save image locally
+                      //  messageAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -429,7 +579,44 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
             }
         }
     }
+    private fun imageStore(uri: Uri) {
+        var inputStream: InputStream? = null
+        try {
+            inputStream = requireContext().contentResolver.openInputStream(uri)
+            val imgBitmap = BitmapFactory.decodeStream(inputStream)
+            val stream = ByteArrayOutputStream()
+            imgBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            val imageByte: ByteArray = stream.toByteArray()
+            val encodedImage = Base64.encodeToString(imageByte, Base64.DEFAULT)
+            uploadImageOnServer(encodedImage,uri.toString())
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+        }
+    }
+    private fun uploadImageOnServer(encodedImage: String, mediaUrl: String) {
+        val urlUpload = "http://192.168.1.11/A3_insertIMGs2.php"
+        val request: StringRequest = object : StringRequest(
+            Method.POST,
+            urlUpload,
+            Response.Listener { response ->
+                Log.d("UploadImage", "Response: $response")
+            },
+            Response.ErrorListener { error ->
+                Log.e("UploadImage", "Error: $error")
+                Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["image"] = encodedImage
+                params["mediaUrl"] = mediaUrl
+                return params
+            }
+        }
 
+        Volley.newRequestQueue(requireContext()).add(request)
+    }
 
     // Function to open the gallery
     private fun openGallery() {
@@ -439,6 +626,7 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
     }
 
     private fun saveMediaMessageToDatabase(mediaUrl: String) {
+        /*
         val userID = FirebaseAuth.getInstance().currentUser?.uid
         val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
@@ -463,6 +651,52 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                     }
                 }
         }
+        */
+// Timestamp for the message
+        // Timestamp for the message
+        val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+
+        // Save message data to the Firebase Realtime Database
+        val url = "http://192.168.1.11/A3_insertIMGs.php"
+
+        val stringRequest = object : StringRequest(Method.POST, url,
+            Response.Listener { response ->
+                // Handle the response from PHP
+                Log.d("UploadImage", "Response: $response")
+                // Message saved successfully
+                // If message inserted successfully, display it in the RecyclerView
+                val messageId = response // Assuming the response contains the inserted message ID
+                val message = Message(
+                    messageId,
+                    MessageType.IMAGE, // Assuming it's a text message
+                    "",
+                    mediaUrl, // Assuming there's no media URL for text messages
+                    userID.toString(),
+                    mentorName!!,
+                    System.currentTimeMillis() // Use current timestamp
+                )
+                messageList.add(message)
+                messageAdapter.notifyDataSetChanged()
+            },
+            Response.ErrorListener { error ->
+                // Error handling
+                Log.e("UploadImage", "Error: $error")
+                // Error while saving the image
+                Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["userID"] = userID.toString()
+                params["mentorName"] = mentorName ?: ""
+                params["mediaUrl"] = mediaUrl
+                params["timestamp"] = timeStamp
+                params["message_type"] = MessageType.IMAGE.name
+                params["message"] = "" // If you have a message, add it here
+                return params
+            }
+        }
+
+        Volley.newRequestQueue(requireContext()).add(stringRequest)
     }
     override fun onEditMessage(messageId: String, initialMessageText: String) {
         showEditDialog(messageId, initialMessageText)
@@ -485,13 +719,38 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
             .show()
     }
     private fun updateMessage(messageId: String, newMessageContent: String) {
+       /*
         databaseReference.child(messageId).child("messageText").setValue(newMessageContent)
             .addOnSuccessListener {
                 // Handle success
             }
             .addOnFailureListener { e ->
                 // Handle failure
+            }*/
+        val url = "http://192.168.1.11/A3_editMessage.php"
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                // Update the message in the list and notify the adapter
+                messageList.find { it.messageId == messageId }?.let { message ->
+                    val index = messageList.indexOf(message)
+                    messageList[index] = message.copy(messageContent = newMessageContent)
+                    messageAdapter.notifyItemChanged(index)
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["messageId"] = messageId
+                params["newMessageContent"] = newMessageContent
+                return params
             }
+        }
+        val requestQueue: RequestQueue = Volley.newRequestQueue(requireContext())
+        requestQueue.add(stringRequest)
     }
     /*
     private fun startRecording() {
@@ -515,13 +774,12 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
 
         try {
             mediaRecorder.apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-                setOutputFile(audioFilePath)
-                prepare()
-                start()
-                isRecording = true
+                    setAudioSource(MediaRecorder.AudioSource.MIC)
+                    setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                    setOutputFile(audioFilePath)
+                    prepare()
+                    start()
             }
         } catch (e: IOException) {
             Log.e("AudioRecording", "Error starting recording", e)
@@ -571,7 +829,7 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
             // Handle exception
         }
     }
-    private fun onSendVoiceNote() {
+    private fun onSendVoiceNote() {/*
         if (audioFilePath != null) {
             val userID = FirebaseAuth.getInstance().currentUser?.uid
             val timeStamp =
@@ -599,6 +857,50 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                         }
                     }
             }
+        }*/
+        if (audioFilePath != null) {
+            //val userID = FirebaseAuth.getInstance().currentUser?.uid
+            val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+
+            val url = "http://192.168.1.11/A3_insertVoicenotes.php"
+
+            val stringRequest = object : StringRequest(Method.POST, url,
+                Response.Listener { response ->
+                    Log.d("UploadVoiceNote", "Response: $response")
+                    // Voice note sent successfully
+                    // You might want to handle this case, like clearing the audio file path
+                    val messageId = response // Assuming the response contains the inserted message ID
+                    val message = Message(
+                        messageId,
+                        MessageType.VOICE_NOTE, // Assuming it's a text message
+                        "",
+                        audioFilePath!!, // Assuming there's no media URL for text messages
+                        userID.toString(),
+                        mentorName!!,
+                        System.currentTimeMillis() // Use current timestamp
+                    )
+                    saveVoiceNoteToServer(audioFilePath)
+                    messageList.add(message)
+                    messageAdapter.notifyDataSetChanged()
+                    audioFilePath = null
+                },
+                Response.ErrorListener { error ->
+                    // Error handling
+                    Log.e("UploadVoiceNote", "Error: $error")
+                    // You can handle error cases here
+                }) {
+                override fun getParams(): Map<String, String> {
+                    val params = HashMap<String, String>()
+                    params["userID"] = userID.toString()
+                    params["mentorName"] = mentorName ?: ""
+                    params["message_type"] = MessageType.VOICE_NOTE.name
+                    params["mediaUrl"] = audioFilePath!!
+                    params["timestamp"] = timeStamp
+                    return params
+                }
+            }
+
+            Volley.newRequestQueue(requireContext()).add(stringRequest)
         }
     }
     fun onSendButtonClick(view: View) {
@@ -608,12 +910,13 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
         // Check if the message is not empty
         if (messageText.isNotEmpty()) {
             // Get current user ID
-            val userID = FirebaseAuth.getInstance().currentUser?.uid
+            // val userID = FirebaseAuth.getInstance().currentUser?.uid
             // Get current timestamp (String format)
             val timeStamp =
                 SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
-            // Store message data in the database
+            /*
+            // Store message data in the firebase database
             val databaseReference = FirebaseDatabase.getInstance().reference
             val messageId = databaseReference.push().key
             val messageData = mapOf(
@@ -634,10 +937,117 @@ class Screen15 : Fragment(), MessageAdapter.MessageEditListener {
                             // You can handle error cases here
                         }
                     }
+            }*/
+            // Get current user ID
+            // val userID = FirebaseAuth.getInstance().currentUser?.uid
+            val connectivityManager =
+                requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+
+            if (networkInfo != null && networkInfo.isConnected) {
+
+                val url = "http://192.168.1.11/A3_insertMessage.php"
+
+                val stringRequest = object : StringRequest(
+                    Method.POST, url,
+                    Response.Listener<String> { response ->
+                        Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                        // Clear the message text after successful insertion
+                        editTextMessage.text.clear()
+
+                        // If message inserted successfully, display it in the RecyclerView
+                        val messageId =
+                            response // Assuming the response contains the inserted message ID
+                        val message = Message(
+                            messageId,
+                            MessageType.TEXT, // Assuming it's a text message
+                            messageText,
+                            "", // Assuming there's no media URL for text messages
+                            userID.toString(),
+                            mentorName!!,
+                            System.currentTimeMillis() // Use current timestamp
+                        )
+                        messageList.add(message)
+                        messageAdapter.notifyDataSetChanged()
+                    },
+                    Response.ErrorListener { error ->
+                        Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    }) {
+                    override fun getParams(): Map<String, String> {
+                        val params: MutableMap<String, String> = HashMap()
+                        params["userID"] = userID.toString()
+                        params["mentorName"] = mentorName!!
+                        params["message"] = messageText
+                        params["message_type"] = MessageType.TEXT.name
+                        params["file_path"] = ""
+                        params["timestamp"] = timeStamp
+                        return params
+                    }
+                }
+
+                val requestQueue = Volley.newRequestQueue(requireContext())
+                requestQueue.add(stringRequest)
+            } else {
+                // Insert into offline SQLite database
+                val databaseHelper = DatabaseHelper(requireContext())
+                val id = databaseHelper.addMessage(
+                    MessageType.TEXT.name,
+                    messageText,
+                    "", // Assuming there's no media URL for text messages
+                    userID.toString(),
+                    mentorName!!,
+                    System.currentTimeMillis()
+                )
+
+                // If message inserted successfully, display it in the RecyclerView
+                val message = Message(
+                    id.toString(),
+                    MessageType.TEXT, // Assuming it's a text message
+                    messageText,
+                    "", // Assuming there's no media URL for text messages
+                    userID.toString(),
+                    mentorName,
+                    System.currentTimeMillis() // Use current timestamp
+                )
+                messageList.add(message)
+                messageAdapter.notifyDataSetChanged()
+
+                // Clear the message text after successful insertion
+                editTextMessage.text.clear()
             }
         }
     }
+    // Function to check internet connection
 
+    private fun saveVoiceNoteToServer(audioFilePath: String?) {
+        //val userID = FirebaseAuth.getInstance().currentUser?.uid
+        val timeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+        val mentorName = "" // Assuming mentorName is defined elsewhere
+
+        val url = "http://192.168.1.11/A3_insertVoicenotes2.php" // Replace with your PHP script URL
+
+        val stringRequest = object : StringRequest(Method.POST, url,
+            Response.Listener { response ->
+                // Handle the response from PHP
+                Log.d("UploadVoiceNote", "Response: $response")
+                // Voice note uploaded successfully
+            },
+            Response.ErrorListener { error ->
+                // Error handling
+                Log.e("UploadVoiceNote", "Error: $error")
+                // Error while uploading the voice note
+                Toast.makeText(requireContext(), "Failed to upload voice note", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["mediaUrl"] = audioFilePath ?: ""
+                return params
+            }
+        }
+
+        Volley.newRequestQueue(requireContext()).add(stringRequest)
+    }
     private fun replaceFragment(fragment: Fragment){
         // Perform fragment transaction to replace the current fragment with the Screen8 fragment
         val transaction = parentFragmentManager.beginTransaction()

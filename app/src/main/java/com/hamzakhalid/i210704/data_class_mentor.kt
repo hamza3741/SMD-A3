@@ -4,5 +4,6 @@ data class Mentor(
     val name: String = "",
     val description: String = "",
     val status: String = "",
-    val rate: String = ""
+    val rate: String = "",
+    val imageurl:String=" "
 )

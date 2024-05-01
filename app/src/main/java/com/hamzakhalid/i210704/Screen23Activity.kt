@@ -21,21 +21,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akexorcist.screenshotdetection.ScreenshotDetectionDelegate
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.hamzakhalid.integration.R
+import org.json.JSONArray
+import org.json.JSONException
 
 private const val SERVER_KEY = "AAAAjountnY:APA91bH9wlNPn0bnH5DjK0Yt8EhwBhs-bYQGa1f2uMgwStjfcoultSwJWrY6eOIKzadKf5L8Qbp2piskpC9uyaXyGzb6lpK8X9PPgpphxM_dEFrKsbPr8s3I1CHzqdajSiaUwISxRQJg"
 private const val SENDER_ID = "612228380278"
 private const val TAG="Screen23Activity"
 private lateinit var firebaseDatabase: FirebaseDatabase // Reference to Firebase Database
-private lateinit var mAuth: FirebaseAuth
+lateinit var mAuth: FirebaseAuth
 class Screen23Activity : AppCompatActivity(), ScreenshotDetectionDelegate.ScreenshotDetectionListener {
     private lateinit var appointmentRecyclerView: RecyclerView
     private lateinit var appointmentAdapter: AppointmentAdapter
@@ -109,6 +111,7 @@ class Screen23Activity : AppCompatActivity(), ScreenshotDetectionDelegate.Screen
         }
     }
     private fun fetchAppointments() {
+        /*
         val currentUserId = mAuth.currentUser?.uid ?: return // Get current user ID
         val appointmentsRef = firebaseDatabase.reference.child("appointments").orderByChild("userId").equalTo(currentUserId)
 
@@ -129,7 +132,49 @@ class Screen23Activity : AppCompatActivity(), ScreenshotDetectionDelegate.Screen
                 Log.e(TAG, "Failed to fetch appointments: $error")
                 Toast.makeText(applicationContext, "Failed to fetch appointments", Toast.LENGTH_SHORT).show()
             }
-        })
+        })*/
+        val currentUserId = mAuth.currentUser?.uid ?: return // Get current user ID
+
+        val url = "http://192.168.1.11/A3_fetchAppointments.php"
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+                    val appointmentsList = mutableListOf<Appointment>()
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val userId = jsonObject.getString("UserID")
+                        val userName =jsonObject.getString("UserName")
+                        val name = jsonObject.getString("mentorName")
+                        val description = jsonObject.getString("mentorDescription")
+                        val date = jsonObject.getString("date")
+                        val timeslot = jsonObject.getString("timeslot")
+
+                        if (userId == currentUserId) {
+                            val appointment = Appointment(userId,userName, name, description, date, timeslot)
+                            appointmentsList.add(appointment)
+                        }
+                    }
+                    appointmentAdapter = AppointmentAdapter(appointmentsList)
+                    appointmentRecyclerView.adapter = appointmentAdapter
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                // Handle error
+                Log.e("API Error", "Error occurred: ${error.message}")
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                // You can pass any parameters if needed
+                return params
+            }
+        }
+
+        // Add the request to the RequestQueue
+        Volley.newRequestQueue(this).add(stringRequest)
     }
     private fun requestReadExternalStoragePermission() {
         ActivityCompat.requestPermissions(

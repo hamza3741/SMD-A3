@@ -1,12 +1,18 @@
 package com.hamzakhalid.i210704
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.media.RingtoneManager
+import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +25,26 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.hamzakhalid.integration.R
+import java.io.ByteArrayOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 private const val TAG="Screen12"
+private var selectedImageUri: Uri? = null
+
+private const val GALLERY_REQUEST_CODE = 100
+
 class Screen12 : Fragment() {
     private lateinit var spinnerStatus: Spinner
     private lateinit var nameEditText: EditText
+    private lateinit var imageView: ImageView
     private lateinit var descriptionEditText: EditText
     private lateinit var sessionRateEditText: EditText
     private lateinit var uploadMentorButton: Button
@@ -51,6 +66,7 @@ class Screen12 : Fragment() {
         descriptionEditText = view.findViewById(R.id.editTextDescription)
         sessionRateEditText = view.findViewById(R.id.editTextSessionRate)
         uploadMentorButton = view.findViewById(R.id.UploadBtn1)
+        imageView = view.findViewById(R.id.profileIconImageView)
 
         // Initialize Firebase Database
         databaseReference = FirebaseDatabase.getInstance().reference.child("mentors")
@@ -78,7 +94,14 @@ class Screen12 : Fragment() {
         // Apply the adapter to the spinner
         spinnerStatus.adapter = adapter
 
+        val uploadPhotoButton: Button = view.findViewById(R.id.btnUploadPhoto1)
+        // Set click listener for the button
+        uploadPhotoButton.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+        }
         uploadMentorButton.setOnClickListener {
+            /*
             uploadMentor()
             FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -93,11 +116,82 @@ class Screen12 : Fragment() {
             sendNotification("New Mentor Added", "")
             // Send push notification when a screenshot is captured
             // sendPushNotification("ScreenShot Detected", "ScreenShot Captured")
+
+             */
+
+            val name = nameEditText.text.toString()
+            val description = descriptionEditText.text.toString()
+            val status = spinnerStatus.selectedItem.toString()
+            val rate = sessionRateEditText.text.toString()
+
+            val connectivityManager =
+                requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+
+            if (networkInfo != null && networkInfo.isConnected) {
+            val url = "http://192.168.1.11/A3_insertMentor.php"
+            val stringRequest = object : StringRequest(
+                Method.POST, url,
+                Response.Listener { response ->
+                    // Handle successful response
+                    Log.d("API Response", response)
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result
+                            Log.d(TAG, "FCM token: $token")
+                            // Use 'token' to send push notifications
+                            sendPushNotification("New Mentor Added", "", token)
+                        } else {
+                            Log.e(TAG, "Failed to get FCM token: ${task.exception}")
+                        }
+                    }
+                    sendNotification("New Mentor Added", "")
+                },
+                Response.ErrorListener { error ->
+                    // Handle error
+                    Log.e("API Error", "Error occurred: ${error.message}")
+                }) {
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["name"] = name
+                    params["description"] = description
+                    params["rate"] = rate
+                    params["status"] = status
+                    if (selectedImageUri != null) {
+                        val imageBitmap = MediaStore.Images.Media.getBitmap(
+                            requireContext().contentResolver,
+                            selectedImageUri
+                        )
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                        val imageBytes = byteArrayOutputStream.toByteArray()
+                        val encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+                        params["image"] = encodedImage
+                    }
+                    return params
+                }
+            }
+            // Add the request to the RequestQueue
+            Volley.newRequestQueue(requireContext()).add(stringRequest)
+            }
+            else{
+                val dbHelper = DatabaseHelper(requireContext())
+                dbHelper.addMentor(name, description, rate, status, "")
+            }
         }
 
         return view
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            selectedImageUri = data.data
+            // Do something with the selected image URI, for example:
+            selectedImageUri?.let {
+                imageView.setImageURI(it)
+            }
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -105,11 +199,12 @@ class Screen12 : Fragment() {
         val uploadPhotoButton: Button = view.findViewById(R.id.btnUploadPhoto1)
 
         // Set click listener for the button
+        /*
         uploadPhotoButton.setOnClickListener {
             // Create an intent to start Screen17 activity
             val intent = Intent(activity, Screen17Activity::class.java)
             startActivity(intent)
-        }
+        }*/
         val uploadVideoButton: Button = view.findViewById(R.id.btnUploadVideo1)
         uploadVideoButton.setOnClickListener {
             // Create an intent to start Screen18 activity

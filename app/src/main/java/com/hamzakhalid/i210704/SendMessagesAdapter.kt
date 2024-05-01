@@ -31,6 +31,8 @@ class MessageAdapter(
 
     interface MessageEditListener {
         fun onEditMessage(messageId: String, initialMessageText: String)
+       // fun onEditMessage(messageId: String, initialMessageText: String)
+        fun onDeleteMessage(messageId: String)
     }
 
     inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,6 +57,7 @@ class MessageAdapter(
                 messageEditListener?.onEditMessage(message.messageId, message.messageContent ?: "")
             }
             DeleteButton.setOnClickListener {
+                /*
                 databaseReference = FirebaseDatabase.getInstance().getReference("messages")
                 val message = messages[adapterPosition]
                 val messageId = message.messageId // Get message ID
@@ -67,7 +70,9 @@ class MessageAdapter(
                         .addOnFailureListener { e ->
                             Log.e("MessageAdapter", "Error deleting message from database: ${e.message}")
                         }
-                }
+                }*/
+                val message = messages[adapterPosition]
+                messageEditListener?.onDeleteMessage(message.messageId)
             }
         }
         private fun updateMessage(messageId: String, newMessageContent: String) {

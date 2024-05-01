@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -13,6 +14,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hamzakhalid.integration.R
@@ -20,6 +24,7 @@ import com.hamzakhalid.integration.R
 class Screen22Activity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private var userId: Int = -1
 
     // Request code for image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -30,6 +35,9 @@ class Screen22Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.screen22)
+        // Retrieve userId from intent extras
+        userId = intent.getIntExtra("USER_ID", -1)
+        Log.e("UserID", "User ID: $userId")
 
         mAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -78,6 +86,7 @@ class Screen22Activity : AppCompatActivity() {
 
         UpdateProfile1.setOnClickListener {
             // Get current user's UID
+            /*
             val currentUser = mAuth.currentUser
             val uid = currentUser?.uid
 
@@ -104,7 +113,41 @@ class Screen22Activity : AppCompatActivity() {
                         // Show failure message
                         Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show()
                     }
+            }*/
+           // val userId = mAuth.currentUser?.uid
+            val updatedName = Name.text.toString()
+            val updatedEmail = email.text.toString()
+            val updatedContact = contact.text.toString()
+            val selectedCountry = spinnerCountry.selectedItem.toString()
+            val selectedCity = spinnerCity.selectedItem.toString()
+
+            // URL of your PHP script
+            val url = "http://192.168.1.11/A3_editUser.php"
+
+            // Create a String request
+            val stringRequest = object : StringRequest(Method.POST, url,
+                Response.Listener { response ->
+                    // Handle response
+                    Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
+                },
+                Response.ErrorListener { error ->
+                    // Error handling
+                    Toast.makeText(this, "Error occurred: ${error.message}", Toast.LENGTH_SHORT).show()
+                }) {
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["userID"] = userId.toString()
+                    params["userName"] = updatedName
+                    params["userEmail"] = updatedEmail
+                    params["userContact"] = updatedContact
+                    params["country"] = selectedCountry
+                    params["city"] = selectedCity
+                    return params
+                }
             }
+
+            // Add the request to the RequestQueue
+            Volley.newRequestQueue(this).add(stringRequest)
         }
         // Set OnClickListener to profileIconImageView
         profileIconImageView.setOnClickListener {

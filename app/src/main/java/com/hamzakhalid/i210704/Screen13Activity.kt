@@ -14,6 +14,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -118,6 +121,7 @@ class Screen13Activity : AppCompatActivity() {
         val BookAppointmentBtn = findViewById<Button>(R.id.AppointmentBtn1)
         BookAppointmentBtn.setOnClickListener {
             // Check if a slot is selected
+            /*
             if (selectedSlot == null) {
                 Log.d("BOOKING", "Please select a time slot!")
                 // You can display a toast message to indicate no slot is selected
@@ -185,7 +189,88 @@ class Screen13Activity : AppCompatActivity() {
                     Log.e(TAG, "Failed to get FCM token: ${task.exception}")
                 }
             }
-            sendNotification("New Booking Added", "New Booking Added")
+            sendNotification("New Booking Added", "New Booking Added")*/
+            // Check if a slot is selected
+            if (selectedSlot == null) {
+                Log.d("BOOKING", "Please select a time slot!")
+                // You can display a toast message to indicate no slot is selected
+                return@setOnClickListener
+            }
+
+            // Get current user ID (assuming you have a method to retrieve it)
+            val currentUserId = getLoggedInUserId() // Replace with your user ID retrieval method
+
+            getUserName(
+                userId = currentUserId,
+                onSuccess = { retrievedUsername ->
+                    // Username retrieved successfully
+                    Log.d("USERNAME", "Username assigned: $retrievedUsername")
+                    // Proceed with booking logic or any other operations that require the username
+                    // For example:
+                    // performBookingLogic(retrievedUsername)
+
+                    // Check if formatted date and mentor info are available (should be from previous steps)
+                    if (formattedDate == null || mentorName == null || mentorDescription == null) {
+                        Log.e("BOOKING", "Missing appointment details!")
+                        // Handle missing data scenario (e.g., show error message)
+                        return@getUserName
+                    }
+
+                    val url = "http://192.168.1.11/A3_insertAppointments.php"
+                    val stringRequest = object : StringRequest(
+                        Method.POST, url,
+                        Response.Listener { response ->
+                            // Handle successful response
+                            Log.d("API Response", response)
+
+                            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val token = task.result
+                                    Log.d(TAG, "FCM token: $token")
+                                    // Use 'token' to send push notifications
+                                    sendPushNotification("New Booking Added", "New Booking Added", token)
+                                } else {
+                                    Log.e(TAG, "Failed to get FCM token: ${task.exception}")
+                                }
+                            }
+                            sendNotification("New Booking Added", "New Booking Added")
+                        },
+                        Response.ErrorListener { error ->
+                            // Handle error
+                            Log.e("API Error", "Error occurred: ${error.message}")
+                        }) {
+                        override fun getParams(): MutableMap<String, String> {
+                            val params = HashMap<String, String>()
+                            params["UserID"] = currentUserId
+                           params["UserName"] = retrievedUsername
+                            params["name"] = mentorName
+                            params["description"] = mentorDescription
+                            params["date"] = formattedDate!!
+                            params["timeslot"] = selectedSlot!!
+                            return params
+                        }
+                    }
+
+                    // Add the request to the RequestQueue
+                    Volley.newRequestQueue(this).add(stringRequest)
+
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result
+                            Log.d(TAG, "FCM token: $token")
+                            // Use 'token' to send push notifications
+                            sendPushNotification("New Booking Added", "New Booking Added", token)
+                        } else {
+                            Log.e(TAG, "Failed to get FCM token: ${task.exception}")
+                        }
+                    }
+                    sendNotification("New Booking Added", "New Booking Added")
+                },
+                onFailure = { exception ->
+                    // Handle username retrieval error
+                    Log.e("USERNAME", "Error retrieving username", exception)
+                }
+            )
         }
     }
     private fun sendPushNotification(title: String, message: String, deviceToken: String) {

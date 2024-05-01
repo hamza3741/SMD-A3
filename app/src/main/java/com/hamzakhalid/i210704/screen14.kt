@@ -1,27 +1,33 @@
 package com.hamzakhalid.i210704
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.hamzakhalid.integration.R
+import org.json.JSONArray
+import org.json.JSONException
 
 private const val TAG = "Screen14"
 class Screen14 : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var mentorAdapter: ChatMessageAdapter
     private lateinit var database: DatabaseReference
+    private var userId: Int = -1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,11 +76,14 @@ class Screen14 : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Retrieve userId from arguments
+        userId = arguments?.getInt("USER_ID") ?: -1
         // Retrieve the search query from arguments
         //val searchQuery = arguments?.getString("searchQuery") //retrieve search query
         fetchChats()
     }
     private fun fetchChats() {
+        /*
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val mentors = mutableListOf<Mentor>()
@@ -93,12 +102,62 @@ class Screen14 : Fragment() {
                 // Handle database error here
                 Log.e(TAG, "Database error: ${error.message}")
             }
-        })
+        })*/
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+
+        if (networkInfo != null && networkInfo.isConnected) {
+        val url = "http://192.168.1.11/A3_fetchAllMentors.php"
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+                    val mentors = mutableListOf<Mentor>()
+
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val mentor = Mentor(
+                            jsonObject.getString("name"),
+                            jsonObject.getString("description"),
+                            jsonObject.getString("status"),
+                            jsonObject.getString("rate"),
+                            jsonObject.getString("imageurl")
+                        )
+                        mentors.add(mentor)
+                    }
+                    mentorAdapter.updateMentors(mentors)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    // Handle JSON exception here
+                    Toast.makeText(requireContext(), "Error occurred while parsing data", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            },
+            Response.ErrorListener { error ->
+                // Handle error
+                Log.e("API Error", "Error occurred: ${error.message}")
+                Toast.makeText(requireContext(), "Error occurred: ${error.message}", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): MutableMap<String, String> {
+                // No search query needed to fetch all mentors
+                val params = HashMap<String, String>()
+                return params
+            }
+        }
+        Volley.newRequestQueue(requireContext()).add(stringRequest)
+        }
+        else{
+            val dbHelper = DatabaseHelper(requireContext())
+            mentorAdapter.updateMentors(dbHelper.getAllMentors())
+        }
     }
     private fun openScreen15WithMentorName(mentorName: String) {
         val fragment = Screen15()
         val args = Bundle()
         args.putString("mentorName", mentorName)
+        args.putInt("userID",userId)
         fragment.arguments = args
 
         parentFragmentManager.beginTransaction()

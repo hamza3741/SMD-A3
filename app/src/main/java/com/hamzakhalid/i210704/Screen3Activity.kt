@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -12,6 +13,9 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.hamzakhalid.integration.R
@@ -78,8 +82,10 @@ class Screen3Activity : AppCompatActivity() {
         val Name = findViewById<EditText>(R.id.editTextName)
         val contact = findViewById<EditText>(R.id.editContact)
 
+
         if (networkInfo != null && networkInfo.isConnected) {
         btn1.setOnClickListener {
+          /*
             mAuth.createUserWithEmailAndPassword(
                 email.text.toString(),
                 pass.text.toString()
@@ -100,8 +106,51 @@ class Screen3Activity : AppCompatActivity() {
                 finish()
             }.addOnFailureListener {
                 Toast.makeText(this, "Failed To Signup", Toast.LENGTH_LONG).show()
+            }*/
+                val name = Name.text.toString()
+                val phone = contact.text.toString()
+                val country = spinnerCountry.selectedItem.toString()
+                val city = spinnerCity.selectedItem.toString()
+                val email = email.text.toString()
+                val pass = pass.text.toString()
+
+                val url = "http://192.168.1.11/A3_insertUser.php"
+                val stringRequest = object : StringRequest(
+                    Method.POST, url,
+                    Response.Listener { response ->
+                        // Handle successful response
+                        Log.d("API Response", response)
+                        Toast.makeText(this, "User Added Successfully", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, Screen7Activity::class.java))
+                        finish()
+                    },
+                    Response.ErrorListener { error ->
+                        // Handle error
+                        Log.e("API Error", "Error occurred: ${error.message}")
+                    }) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userName"] = name
+                        Log.d("Stored name", "Done")
+                        params["userEmail"] = email
+                        Log.d("Stored email", "Done")
+                        params["userContact"] = phone
+                        Log.d("Stored contact", "Done")
+                        params["country"] = country
+                        Log.d("Stored country", "Done")
+                        params["city"] = city
+                        Log.d("Stored city", "Done")
+                        params["pass"] = pass
+                        Log.d("Stored password", "Done")
+                        return params
+                    }
+                }
+// Add the request to the RequestQueue
+                Log.d("Storing data in db", "in process")
+                // Add the request to the RequestQueue
+                Volley.newRequestQueue(this).add(stringRequest)
+                Log.d("Data in Queue", "Done")
             }
-        }
     }else {
             val dbHelper = DatabaseHelper(this)
             btn1.setOnClickListener {
@@ -126,7 +175,19 @@ class Screen3Activity : AppCompatActivity() {
                     }
                 }
             }
+    }
+    private fun getLoggedInUserId(): String {
+        // Get current user's UID
+        val currentUser = mAuth.currentUser
+        val uid = currentUser?.uid
+
+        // Check if uid is null, throw an exception, or return a default value
+        if (uid == null) {
+            throw IllegalStateException("No logged in user found!")  // Or return an empty string or handle differently
         }
+        return uid
+    }
+
     private fun saveUserToDatabase(uid: String, name: String, email: String, contact: String, country: String, city: String) {
         val usersRef = database.getReference("users")
         val userRef = usersRef.child(uid)

@@ -12,9 +12,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
@@ -51,6 +53,7 @@ class Screen11Activity : AppCompatActivity() {
         // Initialize the editTextExperience variable with the reference to the EditText
         val editTextExperience = findViewById<EditText>(R.id.editTextExperience)
         SubmitFeedback.setOnClickListener {
+            /*
             val feedback = editTextExperience.text.toString().trim()
 
             if (feedback.isNotEmpty()) {
@@ -78,7 +81,40 @@ class Screen11Activity : AppCompatActivity() {
                     Log.e(TAG, "Failed to get FCM token: ${task.exception}")
                 }
             }
-            sendNotification("Feedback Added", "")
+            sendNotification("Feedback Added", "")*/
+            val feedback = editTextExperience.text.toString().trim()
+            val url = "http://192.168.1.11/A3_insertMentorReviews.php"
+            val stringRequest = object : StringRequest(
+                Method.POST, url,
+                Response.Listener { response ->
+                    // Handle successful response
+                    Log.d("API Response", response)
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result
+                            Log.d(TAG, "FCM token: $token")
+                            // Use 'token' to send push notifications
+                            sendPushNotification("Feedback Added", "", token)
+                        } else {
+                            Log.e(TAG, "Failed to get FCM token: ${task.exception}")
+                        }
+                    }
+                    sendNotification("Feedback Added", "")
+                },
+                Response.ErrorListener { error ->
+                    // Handle error
+                    Log.e("API Error", "Error occurred: ${error.message}")
+                }) {
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["MentorName"] = mentorName ?: ""
+                    params["feedback"] = feedback
+                    return params
+                }
+            }
+
+            // Add the request to the RequestQueue
+            Volley.newRequestQueue(this).add(stringRequest)
         }
     }
     private fun insertMentorReview(mentorReview: MentorReview) {

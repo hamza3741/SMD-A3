@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MentorMe</string>
+    <string-array name="country_array">
+        <item>Pakistan</item>
+        <item>China</item>
+        <item>Turkey</item>
+    </string-array>
+    <string name="select_country_hint">Select Country</string>
+
+    <string-array name="city_array">
+        <item>Islamabad</item>
+        <item>Lahore</item>
+        <item>Karachi</item>
+    </string-array>
+    <string name="select_city_hint">Select City</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

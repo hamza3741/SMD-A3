@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "612228380278",
+    "firebase_url": "https://integration-f2435-default-rtdb.firebaseio.com",
+    "project_id": "integration-f2435",
+    "storage_bucket": "integration-f2435.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612228380278:android:5c580e3aee406384429157",
+        "android_client_info": {
+          "package_name": "com.hamzakhalid.integration"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATY64Kj-eGtg2sU9v96BJTY5QjXqh3LNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

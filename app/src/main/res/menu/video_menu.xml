@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_mute"
+        android:title="Mute"
+        app:showAsAction="always"
+        android:icon="@drawable/mute"
+        android:layout_gravity="center"
+        />
+
+    <item
+        android:id="@+id/camera_off"
+        android:title="Camera Off"
+        android:layout_gravity="center"
+        app:showAsAction="always"
+        android:icon="@drawable/videocam_off"/>
+
+    <item
+        android:id="@+id/flip_camera"
+        android:title="Flip Camera"
+        android:layout_gravity="center"
+        app:showAsAction="always"
+        android:icon="@drawable/flip_camera"/>
+
+    <item
+        android:id="@+id/menu_end_call"
+        android:title="End Call"
+        android:layout_gravity="center"
+        app:showAsAction="always"
+        android:icon="@drawable/call_end"/>
+
+</menu>
